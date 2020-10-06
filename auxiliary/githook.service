@@ -1,0 +1,30 @@
+# Provides:          DrMagPie
+# Required-Start:    \$local_fs \$remote_fs
+# Required-Stop:     \$local_fs \$remote_fs
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: GitHook
+# Description:       GitHook small webhook orchestrator
+### END INIT INFO
+
+[Unit]
+Description="GitHook small webhook orchestrator"
+Requires=network-online.target
+After=network-online.target
+
+
+[Service]
+Type=simple
+User=altf4
+Group=altf4
+PIDFile=/var/run/githook.pid
+ExecStart=/home/altf4/.local/bin/githook
+KillMode=process
+KillSignal=SIGTERM
+Restart=on-failure
+TimeoutSec=300s
+LimitNOFILE=65536
+
+
+[Install]
+WantedBy=multi-user.target
